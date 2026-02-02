@@ -1,5 +1,5 @@
 const urls=[
-"raw.githubusercontent.com/munim-sah75/Cofs_TV/refs/heads/main/fancode.m3u",
+"https://raw.githubusercontent.com/munim-sah75/Cofs_TV/refs/heads/main/fancode.m3u",
 "https://raw.githubusercontent.com/biostartvworld/playlist/refs/heads/main/playlist.m3u",
 "https://raw.githubusercontent.com/sm-monirulislam/RoarZone-Auto-Update-playlist/refs/heads/main/RoarZone.m3u"
 ]
@@ -213,5 +213,6 @@ icon.addEventListener("mouseleave",()=>{controlsBoard.style.background="transpar
 })
 
 Promise.all(urls.map(u=>fetch(u).then(r=>r.text()).catch(()=>null))).then(r=>{r.filter(Boolean).forEach(parseM3U);renderCategory();renderList(channels)})
+
 
 
