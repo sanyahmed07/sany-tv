@@ -1,53 +1,53 @@
-
-/**
- * CloudAds SDK - Refactored for Direct Calling
+/** 
+ * CloudAds SDK - Sany-TV Optimized
+ * Fixed for 10 Images (1.png to 10.png)
  */
 (function (window, document) {
     'use strict';
 
-    // 1. Setup a command queue to prevent "ReferenceError"
-    // If getCloudAd is called before this script loads, the request is saved here.
     window.cloudAdsQueue = window.cloudAdsQueue || [];
 
+    // আপনার GitHub Pages ডোমেইন এবং সঠিক ফোল্ডার পাথ
+    const baseUrl = "https://sanyahmed07.github.io/sany-tv/cloud-ads";
+
+    // ব্যানার অ্যাডের লিস্ট
     const bannerAds = [
         {
             type: 'custom',
-            imageUrl: 'https://sanyahmed07.github.io//sany-tv/tree/main/cloud-ads/image/banner' + (Math.floor(Math.random() * 9) + 1) + '.png',
-            clickUrl: 'https://smelthrsfranz.com/uqq3t3j3e?key=bc70b66536f04e1b94b75ed2bc6a9bf3
+            // ১০টি ছবির জন্য Math.random() * 10 ব্যবহার করা হয়েছে
+            imageUrl: () => `${baseUrl}/images/banner/${Math.floor(Math.random() * 10) + 1}.png`,
+            clickUrl: 'https://smelthrsfranz.com/uqq3t3j3e?key=bc70b66536f04e1b94b75ed2bc6a9bf3'
         },
         {
             type: 'adsterra',
             adsterraKey: 'b23a36a52899c1f2850767e2019e1a41',
-            adsterraSrc: 'https://smelthrsfranz.com/4586663bc0723a9d2353ef36588ad896/invoke.js',
-            width: 468,
-            height: 60
+            adsterraSrc: 'https://smelthrsfranz.com/b23a36a52899c1f2850767e2019e1a41/invoke.js',
+            width: 320,
+            height: 50
         }
     ];
 
+    // ফুলস্ক্রিন অ্যাডের লিস্ট
     const fullscreenAds = [
-        { clickUrl: 'https://smelthrsfranz.com/uqq3t3j3e?key=bc70b66536f04e1b94b75ed2bc6a9bf3' }
+        { 
+            imageUrl: () => `${baseUrl}/images/fullscreen/${Math.floor(Math.random() * 10) + 1}.png`,
+            clickUrl: 'https://smelthrsfranz.com/uqq3t3j3e?key=bc70b66536f04e1b94b75ed2bc6a9bf3' 
+        }
     ];
-
-    const getRandomFullscreenImage = () => ''https://sanyahmed07.github.io//sany-tv/tree/main/cloud-ads/image/fullscreen/' + (Math.floor(Math.random() * 9) + 1) + '.png';
-    const getRandomBannerImage = () => ''https://sanyahmed07.github.io//sany-tv/tree/main/cloud-ads/image/banner/' + (Math.floor(Math.random() * 9) + 1) + '.png';
 
     const injectCSS = () => {
         if (document.getElementById('cloudads-sdk-styles')) return;
         const style = document.createElement('style');
         style.id = 'cloudads-sdk-styles';
         style.innerHTML = `
-            .cloudads-fs-wrapper { position: fixed; inset: 0; width: 100%; height: 100%; min-height: 100vh; background-color: #000000; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Roboto', Arial, sans-serif; color: #FFFFFF; z-index: 9999; overflow: hidden; }
-            .cloudads-header { width: 100%; flex: 0 0 auto; background-color: #0093E0; display: none; align-items: center; justify-content: center; font-weight: bold; height: 20px; font-size: 10px; }
-            .cloudads-body { width: 100%; flex: 1 1 auto; display: flex; align-items: center; justify-content: center; background-color: #202020; border: none; cursor: pointer; padding: 0; min-height: 0; overflow: hidden; }
-            .cloudads-body:focus { background-color: #05AEF2; outline: none; }
-            .cloudads-img { width: 100%; height: 100%; object-fit: fill; pointer-events: none; }
-            .cloudads-footer { width: 100%; flex: 0 0 auto; background-color: #202020; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #4a4a4a; height: 20px; padding: 0 4px; font-size: 10px; position: relative; }
-            .cloudads-lsk, .cloudads-rsk { color: #FFFFFF; cursor: pointer; font-weight: bold; }
-            .cloudads-lsk { color: #00A539; }
-            .cloudads-rsk { position: absolute; left: 50%; transform: translateX(-50%); }
-            @media (min-width: 240px) { .cloudads-header { height: 35px; font-size: 14px; } .cloudads-footer { height: 35px; font-size: 14px; } }
-            @media (max-width: 320px) { .cloudads-header { height: 25px; font-size: 11px; } .cloudads-footer { height: 25px; font-size: 11px; } }
-            @media (max-width: 480px) { .cloudads-fs-wrapper { font-size: 12px; } }
+            .cloudads-fs-wrapper { position: fixed; inset: 0; width: 100%; height: 100%; background-color: #000; display: flex; flex-direction: column; justify-content: space-between; z-index: 999999; font-family: sans-serif; }
+            .cloudads-header { background: #d32f2f; color: white; text-align: center; padding: 10px; font-weight: bold; }
+            .cloudads-body { flex: 1; display: flex; align-items: center; justify-content: center; background: #1a1a1a; border: none; cursor: pointer; }
+            .cloudads-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+            .cloudads-footer { background: #222; display: flex; justify-content: space-between; padding: 15px; border-top: 1px solid #444; }
+            .cloudads-btn { cursor: pointer; font-weight: bold; padding: 5px 10px; border-radius: 4px; }
+            .cloudads-close { color: #ff5252; border: 1px solid #ff5252; }
+            .cloudads-open { color: #4caf50; border: 1px solid #4caf50; }
         `;
         document.head.appendChild(style);
     };
@@ -57,122 +57,72 @@
 
         if (isFullscreen) {
             injectCSS();
-            const previousBodyOverflow = document.body.style.overflow;
-            document.body.style.overflow = 'hidden';
-            
             const adWrapper = document.createElement('div');
+            adWrapper.id = 'cloudads-main-fs';
             adWrapper.innerHTML = `
                 <div class="cloudads-fs-wrapper">
-                    <div class="cloudads-header">Advertisement</div>
-                    <button id="cloudads-ad-body" class="cloudads-body">
-                        <img src="${selectedAd.imageUrl}" class="cloudads-img" alt="Ad">
-                    </button>
+                    <div class="cloudads-header">Sponsored</div>
+                    <div class="cloudads-body" id="ad-body-click">
+                        <img src="${selectedAd.imageUrl()}" class="cloudads-img">
+                    </div>
                     <div class="cloudads-footer">
-                        <div id="cloudads-btn-open" class="cloudads-lsk">Close</div>
-                        <div id="cloudads-btn-close" class="cloudads-rsk">Open</div>
+                        <div class="cloudads-btn cloudads-close" id="ad-close-btn">CLOSE</div>
+                        <div class="cloudads-btn cloudads-open" id="ad-open-btn">OPEN</div>
                     </div>
                 </div>`;
             document.body.appendChild(adWrapper);
 
-            const handleOpen = () => { triggerEvent('click'); window.open(selectedAd.clickUrl, '_blank'); };
-            const handleClose = () => {
-                document.body.removeChild(adWrapper);
-                document.body.style.overflow = previousBodyOverflow;
-                document.removeEventListener('keydown', handleAdKeyDown, true);
-                triggerEvent('close');
-            };
+            const openLink = () => { window.open(selectedAd.clickUrl, '_blank'); };
+            const closeAd = () => { document.body.removeChild(adWrapper); triggerEvent('close'); };
 
-            const handleAdKeyDown = (event) => {
-                if (event.key === 'Escape' || event.key === 'Esc') handleClose();
-                if (event.key === 'Enter') handleOpen();
-            };
+            document.getElementById('ad-body-click').onclick = openLink;
+            document.getElementById('ad-open-btn').onclick = openLink;
+            document.getElementById('ad-close-btn').onclick = closeAd;
 
-            document.addEventListener('keydown', handleAdKeyDown, true);
-            document.getElementById('cloudads-ad-body').onclick = handleOpen;
-            document.getElementById('cloudads-btn-open').onclick = handleOpen;
-            document.getElementById('cloudads-btn-close').onclick = handleClose;
-            setTimeout(() => document.getElementById('cloudads-ad-body').focus(), 50);
         } else {
+            // ব্যানার অ্যাড লজিক
             config.container.innerHTML = '';
             if (selectedAd.type === 'adsterra') {
-                const scalerWrapper = document.createElement('div');
-                scalerWrapper.style.cssText = 'width:100%; height:60px; position:relative; overflow:hidden;';
-                config.container.appendChild(scalerWrapper);
-
-                const innerAdDiv = document.createElement('div');
-                innerAdDiv.style.cssText = `width:${selectedAd.width}px; height:${selectedAd.height}px; position:absolute; left:50%; top:50%; transform:translate(-50%, -50%);`;
-                scalerWrapper.appendChild(innerAdDiv);
-
-                const applyScaling = () => {
-                    const containerWidth = config.container.offsetWidth;
-                    const scale = containerWidth < selectedAd.width ? containerWidth / selectedAd.width : 1;
-                    innerAdDiv.style.transform = `translate(-50%, -50%) scale(${scale})`;
-                    scalerWrapper.style.height = (selectedAd.height * scale) + 'px';
-                };
-
-                applyScaling();
-                window.addEventListener('resize', applyScaling);
-
-                window.atOptions = { 'key': selectedAd.adsterraKey, 'format': 'iframe', 'height': selectedAd.height, 'width': selectedAd.width, 'params': {} };
+                window.atOptions = { 'key': selectedAd.adsterraKey, 'format': 'iframe', 'height': 50, 'width': 320, 'params': {} };
                 const script = document.createElement('script');
-                script.type = 'text/javascript';
                 script.src = selectedAd.adsterraSrc;
-                innerAdDiv.appendChild(script);
+                config.container.appendChild(script);
             } else {
-                const bannerImg = document.createElement('img');
-                bannerImg.src = selectedAd.imageUrl;
-                bannerImg.style.cssText = `width:100%; height:${window.innerHeight / 8}px; object-fit:fill; cursor:pointer;`;
-                bannerImg.onclick = () => { triggerEvent('click'); window.open(selectedAd.clickUrl, '_blank'); };
-                config.container.appendChild(bannerImg);
+                const img = document.createElement('img');
+                img.src = selectedAd.imageUrl();
+                img.style.cssText = "width:100%; cursor:pointer; border-radius:5px;";
+                img.onclick = () => window.open(selectedAd.clickUrl, '_blank');
+                config.container.appendChild(img);
             }
         }
         triggerEvent('display');
     }
 
-    // The core logic function
-   // --- FIXED SDK PART ---
-    const processAdRequest = function (config) {
-        if (!config || !config.publisher) return;
-        
+    window.getCloudAd = function (config) {
         setTimeout(() => {
             const targetInventory = !config.container ? fullscreenAds : bannerAds;
-            const selectedAdBase = targetInventory[Math.floor(Math.random() * targetInventory.length)];
-            const selectedAd = { ...selectedAdBase };
-
-            if (!config.container) {
-                selectedAd.imageUrl = getRandomFullscreenImage();
-            } else if (selectedAd.type === 'custom') {
-                selectedAd.imageUrl = getRandomBannerImage();
-            }
-
+            const selectedAd = { ...targetInventory[Math.floor(Math.random() * targetInventory.length)] };
+            
             const events = {};
             const triggerEvent = (name) => { if (events[name]) events[name](); };
             
             const adInstance = {
                 on: (name, cb) => { events[name] = cb; },
-                call: (cmd) => { if (cmd === 'display') displayAd(config, selectedAd, triggerEvent); },
-                // ADD THIS CLICK METHOD BELOW:
-                click: () => { 
-                    triggerEvent('click'); 
-                    if (selectedAd.clickUrl) {
-                        window.open(selectedAd.clickUrl, '_blank');
-                    }
-                }
+                call: (cmd) => { if (cmd === 'display') displayAd(config, selectedAd, triggerEvent); }
             };
-
             if (config.onready) config.onready(adInstance);
-        }, 300);
+        }, 500);
     };
-
-    // Define the global function
-    window.getCloudAd = function (config) {
-        processAdRequest(config);
-    };
-
-    // 2. Process any requests that were queued before the script loaded
-    while (window.cloudAdsQueue.length > 0) {
-        const queuedConfig = window.cloudAdsQueue.shift();
-        processAdRequest(queuedConfig);
-    }
 
 })(window, document);
+
+// সোশ্যাল বার অ্যাড লোড করা (আপনার দেওয়া লিঙ্ক অনুযায়ী)
+(function() {
+    const s1 = document.createElement('script');
+    s1.src = 'https://smelthrsfranz.com/bb/07/10/bb071059998ee5789736f512369c69db.js';
+    document.body.appendChild(s1);
+
+    const s2 = document.createElement('script');
+    s2.src = 'https://smelthrsfranz.com/6a/ee/70/6aee7076b0ab460344f62d8913d8b304.js';
+    document.body.appendChild(s2);
+})();
